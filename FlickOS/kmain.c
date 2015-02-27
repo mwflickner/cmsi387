@@ -8,9 +8,24 @@
 #define FB_HIGH_BYTE_COMMAND 14
 #define FB_LOW_BYTE_COMMAND 15
 
-/* Frame Buffer Stuff */
+/* Colors for FrameBuffer */
+#define FB_BLACK     0
+#define FB_BLUE      1
 #define FB_GREEN     2
+#define FB_CYAN      3
+#define FB_RED       4
+#define FB_MAGENTA   5
+#define FB_BROWN     6
+#define FB_LIGHT_GREY 7
 #define FB_DARK_GREY 8
+#define FB_LIGHT_BLUE 9
+#define FB_LIGHT_GREEN 10
+#define FB_LIGHT_CYAN 11
+#define FB_LIGHT_RED  12
+#define FB_LIGHT_MAGENTA 13
+#define FB_LIGHT_BROWN 14
+#define FB_WHITE     15
+
 
 #define SERIAL_COM1_BASE                0x3F8      /* COM1 base port */
 #define SERIAL_DATA_PORT(base)          (base)
@@ -101,7 +116,7 @@ void serial_configure_baud_rate(unsigned short com, unsigned short divisor){
  */
 int serial_is_transmit_fifo_empty(unsigned int com){
     /* 0x20 = 0010 0000 */
-    return inb(SERIAL_LINE_STATUS_PORT(com)) & 0x20;
+    return inb(SERIAL_LINE_STATUS_PORT(com)) && 0x20;
 }
 
 /** serial_configure_line:
@@ -132,14 +147,18 @@ int serial_write(char *buf, unsigned int len){
 }
 
 
+struct gdt {
+        unsigned int address;
+        unsigned short size;
+} __attribute__((packed));
 
 
 void kmain (){
-    char welcome[] = "Welcome to FlickOS";
+    char welcome[] = "Welcome to FlickOS! ";
     unsigned int size = sizeof(welcome) - 1;
     fb_write(welcome, size);
     serial_write(welcome, size);
-    char sweg[] = "i cri everitiem :'(";
+    char sweg[] = "Do you even sweg?";
     unsigned int swegSize = sizeof(sweg) - 1;
     fb_write(sweg, swegSize);
 
