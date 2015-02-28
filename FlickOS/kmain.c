@@ -1,4 +1,5 @@
-#include "io.h"
+#include "io/io.h"
+#include "mem/gdt.h"
 
 /* I/O Ports */
 #define FB_COMMAND_PORT 0x3D4
@@ -146,15 +147,52 @@ int serial_write(char *buf, unsigned int len){
     return 0;
 }
 
+void encodeGdtEntry(unsigned char *target, struct gdt source){
+    if(source.limit > 65536){
+        //adjust if needed
+        source.limit = source.limit >> 12;
+        target[6] = 0xC0;
+    }
+    else{
+        target[6] = 0x40;
+    }
 
-struct gdt {
-        unsigned int address;
-        unsigned short size;
-} __attribute__((packed));
+    // Encode the limit
+    target[0] = source.limit & 0xFF;
+    target[1] = (source.limit >> 8) & 0xFF;
+    target[6] |= (source.limit >> 16) & 0xF;
+    // Encode the base
+    target[2] = source.base & 0xFF;
+    target[3] = (source.base >> 8) & 0xFF;
+    target[4] = (source.base >> 16) & 0xFF;
+    target[7] = (source.base >> 24) & 0xFF;
+    // And... Type
+    target[5] = source.type;
+}
+
+void gdt_load(){
+    struct gdt source[4];
+    source[0].base=0;
+    source[0].limit=0;
+    source[0].type=0; // Selector 0x00 cannot be used
+    source[1].base=0;
+    source[1].limit=0xffffffff;
+    source[1].type=0x9A; // Selector 0x08 will be our code
+    source[2].base=0;
+    source[2].limit=0xffffffff;
+    source[2].type=0x92; // Selector 0x10 will be our data
+    unsigned long global_descriptor_table[4];
+    int i;
+    for (i = 0; i < 4; i++) {
+        encodeGdtEntry((unsigned char*)&global_descriptor_table[i], source[i]);
+    }
+    setGdt(&(global_descriptor_table[0]), sizeof(global_descriptor_table[0]));
+}
 
 
 void kmain (){
-    char welcome[] = "Welcome to FlickOS! ";
+    gdt_load();
+    char welcome[] = "Welcome to FlickOS! GDT Loaded. ";
     unsigned int size = sizeof(welcome) - 1;
     fb_write(welcome, size);
     serial_write(welcome, size);

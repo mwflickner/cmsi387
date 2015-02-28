@@ -18,31 +18,14 @@
         dd FLAGS                                    ; the flags,
         dd CHECKSUM                                 ; and the checksum
 
-    impsegreg:
-        mov eax, [esp+4]
-        mov ebx, [eax]
-        add ebx, 8
-        mov [eax], ebx
-        ret 
 
     loader:                                         ; the loader label (defined as entry point in linker script)
         mov eax, 0xCAFEBABE                         ; place the number 0xCAFEBABE in the register eax
         mov esp, kernel_stack + KERNEL_STACK_SIZE   ; point esp to the start of the
                                                     ; stack (end of memory area)    
         
-        lgdt [eax]
-        ;jmp 0x08:flush_cs
-        ;mov cs, [0x08]
-        ;mov ss, [0x10]
-        ;mov ds, [0x10]
-        ;mov es, [0x10]
-        ;mov gs, [0x10]
-        ;mov fs, [0x10]
         extern kmain
-        call kmain
-
-     flush_cs:
-        ; cs goes to 0x08 
+        call kmain 
 
 
     .loop:
