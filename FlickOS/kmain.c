@@ -1,5 +1,6 @@
 #include "io/io.h"
 #include "mem/gdt.h"
+#include "io/idt.h"
 
 /* I/O Ports */
 #define FB_COMMAND_PORT 0x3D4
