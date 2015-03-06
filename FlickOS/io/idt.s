@@ -54,11 +54,11 @@ extern  interrupt_handler
     no_error_code_interrupt_handler 7       ; create handler for interrupt 7
     error_code_interrupt_handler    8       ; create handler for interrupt 8
     no_error_code_interrupt_handler 9       ; create handler for interrupt 9
-    error_code_interrupt_handler 10      ; create handler for interrupt 10
-    error_code_interrupt_handler 11      ; create handler for interrupt 11
-    error_code_interrupt_handler 12      ; create handler for interrupt 12
-    error_code_interrupt_handler 13      ; create handler for interrupt 13
-    error_code_interrupt_handler 14      ; create handler for interrupt 14
+    error_code_interrupt_handler 10         ; create handler for interrupt 10
+    error_code_interrupt_handler 11         ; create handler for interrupt 11
+    error_code_interrupt_handler 12         ; create handler for interrupt 12
+    error_code_interrupt_handler 13         ; create handler for interrupt 13
+    error_code_interrupt_handler 14         ; create handler for interrupt 14
     no_error_code_interrupt_handler 15      ; create handler for interrupt 15
     
 global  load_idt

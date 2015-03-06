@@ -191,6 +191,7 @@ void gdt_load(){
 }
 
 
+
 void kmain (){
     gdt_load();
     char welcome[] = "Welcome to FlickOS! GDT Loaded. ";
