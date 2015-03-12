@@ -25,7 +25,7 @@ typedef struct {
     unsigned char always0;
     unsigned char flags;
     unsigned short high;
-} __attribute___((packed)) idt_entry;
+} __attribute__((packed)) idt_entry;
 
 void interrupt_handler(struct cpu_state cpu, struct stack_state stack, unsigned int interrupt);
 void load_idt(void* p);
