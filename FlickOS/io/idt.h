@@ -19,8 +19,16 @@ struct stack_state {
     unsigned int eflags;
 } __attribute__((packed));
 
-void interrupt_handler(struct cpu_state cpu, struct stack_state stack, unsigned int interrupt);
+typedef struct {
+    unsigned short low;
+    unsigned short segmentSelector;
+    unsigned char always0;
+    unsigned char flags;
+    unsigned short high;
+} __attribute___((packed)) idt_entry;
 
+void interrupt_handler(struct cpu_state cpu, struct stack_state stack, unsigned int interrupt);
+void load_idt(void* p);
 
 
 #endif /* INCLUDE_IDT_H */

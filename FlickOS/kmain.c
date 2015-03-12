@@ -191,6 +191,16 @@ void gdt_load(){
 }
 
 
+idt_entry idtTable[32];
+
+unsigned int last_interrupt;
+
+void interrupt_handler(struct cpu_state cpu, struct stack_state stack, unsigned int interrupt){
+    last_interrupt = interrupt;
+    (void)cpu;
+    (void)stack;
+}
+
 
 void kmain (){
     gdt_load();
@@ -201,5 +211,5 @@ void kmain (){
     char sweg[] = "Do you even sweg?";
     unsigned int swegSize = sizeof(sweg) - 1;
     fb_write(sweg, swegSize);
-
+    load_idt(idtTable);
 }
