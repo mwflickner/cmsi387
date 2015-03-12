@@ -61,6 +61,8 @@ extern  interrupt_handler
     error_code_interrupt_handler 14         ; create handler for interrupt 14
     no_error_code_interrupt_handler 15      ; create handler for interrupt 15
     
+
+
 global  load_idt
 
     ; load_idt - Loads the interrupt descriptor table (IDT).
