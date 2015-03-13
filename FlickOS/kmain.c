@@ -193,6 +193,16 @@ void gdt_load(){
 
 idt_entry idtTable[32];
 
+
+void fill_idt_table(idt_entry* idt){
+    extern unsigned int interrupt_handler_0;
+    idt[0].low = interrupt_handler_0 & 0x0000FFFF;
+    idt[0].segmentSelector = 0x08;
+    idt[0].always0 = 0x0;
+    idt[0].flags = 0x8E;
+    idt[0].high = interrupt_handler_0 >> 16;
+}
+
 unsigned int last_interrupt;
 
 void interrupt_handler(struct cpu_state cpu, struct stack_state stack, unsigned int interrupt){
