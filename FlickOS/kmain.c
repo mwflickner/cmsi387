@@ -193,14 +193,27 @@ void gdt_load(){
 
 idt_entry idtTable[32];
 
+//macro to fill table
+#define FILL_IDT(a)\
+    extern unsigned int interrupt_handler_##a;\
+    idt[a].low = interrupt_handler_##a & 0x0000FFFF;\
+    idt[a].segmentSelector = 0x08;\
+    idt[a].always0 = 0x0;\
+    idt[a].flags = 0x8E;\
+    idt[a].high = interrupt_handler_##a >> 16;
 
 void fill_idt_table(idt_entry* idt){
-    extern unsigned int interrupt_handler_0;
-    idt[0].low = interrupt_handler_0 & 0x0000FFFF;
-    idt[0].segmentSelector = 0x08;
-    idt[0].always0 = 0x0;
-    idt[0].flags = 0x8E;
-    idt[0].high = interrupt_handler_0 >> 16;
+    FILL_IDT(0);
+    FILL_IDT(1);
+    FILL_IDT(2);
+    FILL_IDT(3);
+    FILL_IDT(4);
+    FILL_IDT(5);
+    FILL_IDT(6);
+    FILL_IDT(7);
+    FILL_IDT(8);
+    FILL_IDT(9);
+    FILL_IDT(10);
 }
 
 unsigned int last_interrupt;
