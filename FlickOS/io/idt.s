@@ -60,7 +60,22 @@ extern interrupt_handler
     error_code_interrupt_handler 13         ; create handler for interrupt 13
     error_code_interrupt_handler 14         ; create handler for interrupt 14
     no_error_code_interrupt_handler 15      ; create handler for interrupt 15
-    
+    no_error_code_interrupt_handler 16      ; create handler for interrupt 16
+    error_code_interrupt_handler 17         ; create handler for interrupt 17
+    no_error_code_interrupt_handler 18      ; create handler for interrupt 18
+    no_error_code_interrupt_handler 19      ; create handler for interrupt 19
+    no_error_code_interrupt_handler 20      ; create handler for interrupt 20
+    no_error_code_interrupt_handler 21      ; create handler for interrupt 21
+    no_error_code_interrupt_handler 22      ; create handler for interrupt 22
+    no_error_code_interrupt_handler 23      ; create handler for interrupt 23
+    no_error_code_interrupt_handler 24      ; create handler for interrupt 24
+    no_error_code_interrupt_handler 25      ; create handler for interrupt 25
+    no_error_code_interrupt_handler 26      ; create handler for interrupt 26
+    no_error_code_interrupt_handler 27      ; create handler for interrupt 27
+    no_error_code_interrupt_handler 28      ; create handler for interrupt 28
+    no_error_code_interrupt_handler 29      ; create handler for interrupt 29
+    no_error_code_interrupt_handler 30      ; create handler for interrupt 30
+    no_error_code_interrupt_handler 31      ; create handler for interrupt 31
 
 
 global  load_idt

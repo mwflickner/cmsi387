@@ -214,6 +214,27 @@ void fill_idt_table(idt_entry* idt){
     FILL_IDT(8);
     FILL_IDT(9);
     FILL_IDT(10);
+    FILL_IDT(11);
+    FILL_IDT(12);
+    FILL_IDT(13);
+    FILL_IDT(14);
+    FILL_IDT(15);
+    FILL_IDT(16);
+    FILL_IDT(17);
+    FILL_IDT(18);
+    FILL_IDT(19);
+    FILL_IDT(20);
+    FILL_IDT(21);
+    FILL_IDT(22);
+    FILL_IDT(23);
+    FILL_IDT(24);
+    FILL_IDT(25);
+    FILL_IDT(26);
+    FILL_IDT(27);
+    FILL_IDT(28);
+    FILL_IDT(29);
+    FILL_IDT(30);
+    FILL_IDT(31);
 }
 
 unsigned int last_interrupt;
