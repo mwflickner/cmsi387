@@ -1,6 +1,7 @@
 #include "io/io.h"
 #include "mem/gdt.h"
 #include "io/idt.h"
+#include "io/pic.h"
 
 /* I/O Ports */
 #define FB_COMMAND_PORT 0x3D4
@@ -241,8 +242,12 @@ unsigned int last_interrupt;
 
 void interrupt_handler(struct cpu_state cpu, struct stack_state stack, unsigned int interrupt){
     last_interrupt = interrupt;
+    fb_write("X", 1);
     (void)cpu;
     (void)stack;
+    
+    //must be last statement
+    pic_acknowledge(last_interrupt);
 }
 
 
@@ -255,5 +260,8 @@ void kmain (){
     char sweg[] = "Do you even sweg?";
     unsigned int swegSize = sizeof(sweg) - 1;
     fb_write(sweg, swegSize);
+    fill_idt_table(idtTable);
     load_idt(idtTable);
+    configure_pic();
+
 }
