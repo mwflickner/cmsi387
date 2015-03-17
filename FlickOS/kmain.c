@@ -238,10 +238,9 @@ void fill_idt_table(idt_entry* idt){
     FILL_IDT(31);
 }
 
-unsigned int last_interrupt;
 
 void interrupt_handler(struct cpu_state cpu, struct stack_state stack, unsigned int interrupt){
-    last_interrupt = interrupt;
+    unsigned int last_interrupt = interrupt;
     fb_write("X", 1);
     (void)cpu;
     (void)stack;
@@ -262,6 +261,6 @@ void kmain (){
     fb_write(sweg, swegSize);
     fill_idt_table(idtTable);
     load_idt(idtTable);
-    configure_pic();
+    pic_init();
 
 }
