@@ -262,5 +262,4 @@ void kmain (){
     fill_idt_table(idtTable);
     load_idt(idtTable);
     pic_init();
-
 }
