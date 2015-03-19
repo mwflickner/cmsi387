@@ -1,5 +1,5 @@
 #include "io.h"
-#include "idt.h"
+
 
 #define PIC1_PORT_A 0x20
 #define PIC2_PORT_A 0xA0
