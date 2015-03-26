@@ -35,3 +35,7 @@ run: os.iso
 
 clean:
 	rm $(OBJECTS) kernel.elf os.iso
+
+debug: os.iso
+	./bochs/bochs -f bochsrc.debug -q 
+
