@@ -21,7 +21,8 @@ void kmain (){
     fb_write(sweg, swegSize);
     printf("Address of idt_init() = %x \n", idt_init);
     idt_init();
-    //pic_init();
+    pic_init();
     asm volatile ("int $0x3");
     asm volatile ("int $0x4");
+    asm volatile ("int $33");
 }

@@ -3,6 +3,8 @@
 #include "idt.h"
 #include "screen.h"
 #include "gdt.h"
+#include "printf.h"
+#include "keyboard.h"
 
 //GDT Code
 enum {gdtSize = 5};
@@ -117,12 +119,16 @@ void idt_init(){
 
 
 void interrupt_handler(struct cpu_state cpu, unsigned int interrupt, struct stack_state stack){
-    unsigned int last_interrupt = interrupt;
-    fb_write("X", 1);
+    printf("interrupt is: %d \n", interrupt);
+    //fb_write("X", 1);
     (void)cpu;
     (void)stack;
     
+    if(interrupt == 33){
+        uint8_t code = read_scan_code();
+        (void)code;
+    }
     //must be last statement
-    pic_acknowledge(last_interrupt);
+    pic_acknowledge(interrupt);
 }
 

@@ -1,5 +1,6 @@
 #include "io.h"
 #include "pic.h"
+#include "printf.h"
 
 
 #define PIC1_PORT_A 0x20
@@ -32,9 +33,9 @@ void pic_init(){
 
     //Set the interrupt mask
     /* Only listen to irqs 0, 1, and 2 */
-    outb( 0x21, 0xf8 ); /* master PIC */
+    outb( 0x21, 0xfd ); /* master PIC */
     outb( 0xA1, 0xff ); /* slave PIC */
-
+    asm volatile("sti");
 }
 /** pic_acknowledge:
  *  Acknowledges an interrupt from either PIC 1 or PIC 2.
@@ -43,13 +44,13 @@ void pic_init(){
  */
 void pic_acknowledge(unsigned int interrupt){
     if (interrupt < PIC1_START_INTERRUPT || interrupt > PIC2_END_INTERRUPT) {
-      return;
+        return;
     }
 
     if (interrupt < PIC2_START_INTERRUPT) {
-      outb(PIC1_PORT_A, PIC_ACK);
+        outb(PIC1_PORT_A, PIC_ACK);
     } else {
-      outb(PIC2_PORT_A, PIC_ACK);
+        outb(PIC2_PORT_A, PIC_ACK);
     }
 }
 
