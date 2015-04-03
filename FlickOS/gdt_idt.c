@@ -42,21 +42,22 @@ void gdt_init() {
 
 //IDT CODE
 
+enum{idtSize = 48};
 
 idt_ptr_t idtP;
 
-idt_entry idtTable[48];
+idt_entry idtTable[idtSize];
 
 //macro to fill table
 #define FILL_IDT(a)\
-    extern unsigned int interrupt_handler_##a;\
-    idt[a].low = interrupt_handler_##a & 0x0000FFFF;\
-    idt[a].segmentSelector = 0x08;\
-    idt[a].always0 = 0x0;\
-    idt[a].flags = 0x8E;\
-    idt[a].high = interrupt_handler_##a >> 16;
+    extern void interrupt_handler_##a(void);\
+    idtTable[a].low = (uint32_t)interrupt_handler_##a & 0x0000FFFF;\
+    idtTable[a].segmentSelector = 0x08;\
+    idtTable[a].always0 = 0x0;\
+    idtTable[a].flags = 0x8E;\
+    idtTable[a].high = (uint32_t)interrupt_handler_##a >> 16;
 
-void fill_idt_table(idt_entry* idt){
+void fill_idt_table(){
     FILL_IDT(0);
     FILL_IDT(1);
     FILL_IDT(2);
@@ -89,17 +90,33 @@ void fill_idt_table(idt_entry* idt){
     FILL_IDT(29);
     FILL_IDT(30);
     FILL_IDT(31);
+    FILL_IDT(32);
+    FILL_IDT(33);
+    FILL_IDT(34);
+    FILL_IDT(35);
+    FILL_IDT(36);
+    FILL_IDT(37);
+    FILL_IDT(38);
+    FILL_IDT(39);
+    FILL_IDT(40);
+    FILL_IDT(41);
+    FILL_IDT(42);
+    FILL_IDT(43);
+    FILL_IDT(44);
+    FILL_IDT(45);
+    FILL_IDT(46);
+    FILL_IDT(47);
 }
 
 void idt_init(){
-    fill_idt_table(idtTable);
+    fill_idt_table();
     idtP.limit = sizeof(idtTable);
     idtP.base = &idtTable[0];
     load_idt(&idtP);
 }
 
 
-void interrupt_handler(struct cpu_state cpu, struct stack_state stack, unsigned int interrupt){
+void interrupt_handler(struct cpu_state cpu, unsigned int interrupt, struct stack_state stack){
     unsigned int last_interrupt = interrupt;
     fb_write("X", 1);
     (void)cpu;

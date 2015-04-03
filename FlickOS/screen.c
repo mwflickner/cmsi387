@@ -77,6 +77,12 @@ int fb_write(char *buf, unsigned int len){
     unsigned int i=0;
     //int size = sizeof(buf);
     for(i=0; i<len; i++){
+        if('\n' == buf[i]){
+            cursorPosition = (cursorPosition/80 + 1)*80;
+            if(cursorPosition/80 > 25){
+                cursorPosition = 0;
+            }
+        }
         fb_write_cell(2*cursorPosition, buf[i], FB_GREEN, FB_DARK_GREY);
         cursorPosition++;
     }
@@ -138,4 +144,13 @@ int serial_write(char *buf, unsigned int len){
     }
 
     return 0;
+}
+
+
+void putc ( void* p, char c) {
+    char temp[2];
+    temp[0] = c;
+    temp[1] = 0;
+    fb_write(temp, 1);
+    (void) p;
 }
