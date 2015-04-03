@@ -27,8 +27,17 @@ typedef struct {
     unsigned short high;
 } __attribute__((packed)) idt_entry;
 
-void interrupt_handler(struct cpu_state cpu, struct stack_state stack, unsigned int interrupt);
-void load_idt(void* p);
+// A struct describing a pointer to an array of interrupt handlers.
+// This is in a format suitable for giving to 'lidt'.
+struct idt_ptr_struct
+{
+   unsigned short limit;
+   idt_entry *base;                // The address of the first element in our idt_entry_t array.
+} __attribute__((packed));
+typedef struct idt_ptr_struct idt_ptr_t;
+
+
+void load_idt(idt_ptr_t *p);
 
 
 #endif /* INCLUDE_IDT_H */
