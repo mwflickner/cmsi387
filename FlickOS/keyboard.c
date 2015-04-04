@@ -18,7 +18,7 @@ unsigned char read_scan_code(void){
 }
 
 
-static unsigned char kbdus[256] =
+static unsigned char kbdus[128] =
 {
     0,  27, '1', '2', '3', '4', '5', '6', '7', '8', /* 9 */
   '9', '0', '-', '=', '\b', /* Backspace */
@@ -57,7 +57,7 @@ static unsigned char kbdus[256] =
     0,  /* F12 Key */
     0,  /* All other keys are undefined */
 };  
-enum {CapsRelase = 0xBA, leftShift = 0x2A, rightShift = 0x36, leftShiftRelease = 0xAA, rightShiftRelease= 0xB6};
+enum {CapsRelease = 0xBA, leftShift = 0x2A, rightShift = 0x36, leftShiftRelease = 0xAA, rightShiftRelease= 0xB6};
 static uint8_t CapLocks = 0;
 static uint8_t ShiftL = 0;
 static uint8_t ShiftR = 0;
@@ -73,29 +73,44 @@ uint8_t toLowerCase(uint8_t character){
 
 uint8_t convertToAscii(const uint8_t code){
 
-    if(code == CapsRelase){
+    if(code == CapsRelease){
         CapLocks = !CapLocks;
+        printf("capslocks = %d ", CapLocks);
+        return 0;
     }
     if(code == leftShift){
         ShiftL = 1;
+        return 0;
     }
     if(code == leftShiftRelease){
         ShiftL = 0;
+        return 0;
     }
     if(code == rightShift){
         ShiftR = 1;
+        return 0;
     }
     if(code == rightShiftRelease){
         ShiftR = 0;
+        return 0;
     }
 
-    char temp = kbdus[code];
+    if(code > 0x7F){
+        return 0;
+    }
+
+    uint8_t temp = kbdus[code & 0x7F];
 
     if(CapLocks && (ShiftL || ShiftR)){
         return temp;
     }
     if(CapLocks || ShiftL || ShiftR){
-        return toUpperCase(temp);
+        if(temp == 0){
+            return temp;
+        }
+        else {
+            return toUpperCase(temp);
+        } 
     }
 
     return temp;
