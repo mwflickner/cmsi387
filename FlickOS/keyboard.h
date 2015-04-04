@@ -3,4 +3,6 @@
 
 unsigned char read_scan_code(void);
 
+void echo_keyboard();
+
 #endif /* INCLUDE_KEYBOARD_H */

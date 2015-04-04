@@ -119,14 +119,15 @@ void idt_init(){
 
 
 void interrupt_handler(struct cpu_state cpu, unsigned int interrupt, struct stack_state stack){
-    printf("interrupt is: %d \n", interrupt);
+    //printf("interrupt is: %d \n", interrupt);
     //fb_write("X", 1);
     (void)cpu;
     (void)stack;
     
     if(interrupt == 33){
-        uint8_t code = read_scan_code();
-        (void)code;
+        //uint8_t code = read_scan_code();
+        //(void)code;
+        echo_keyboard();
     }
     //must be last statement
     pic_acknowledge(interrupt);
