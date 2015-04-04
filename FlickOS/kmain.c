@@ -36,10 +36,11 @@ void kmain(unsigned int ebx){
         fb_write(error, sizeof(error)-1);
         return;
     }
-    unsigned int address_of_module = mbinfo->mods_addr;
-    printf("address_of_module is %x \n", address_of_module);
     typedef void (*call_module_t)(void);
     /* ... */
+    module_t *m = (module_t*) mbinfo->mods_addr;
+    unsigned int address_of_module = m->mod_start;
+    printf("address_of_module is %x \n", address_of_module);
 
     call_module_t start_program = (call_module_t) address_of_module;
     printf("about to start program \n");
