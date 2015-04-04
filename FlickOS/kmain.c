@@ -2,6 +2,7 @@
 //#include "gdt.h"
 //#include "idt.h"
 #include "screen.h"
+#include "serial.h"
 #include "pic.h"
 #include "gdt_idt.h"
 #include "printf.h"
