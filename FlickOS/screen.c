@@ -39,7 +39,7 @@
  *  @param bg The background color
 */
 char *fb = (char *) 0x000B8000;
-unsigned int cursorPosition = 0;
+int cursorPosition = 0;
 void fb_write_cell(unsigned int i, char c, unsigned char fg, unsigned char bg)
 {
     fb[i] = c;
@@ -69,13 +69,23 @@ int fb_write(char *buf, unsigned int len){
             if(cursorPosition/80 > 25){
                 cursorPosition = 0;
             }
+            fb_move_cursor(cursorPosition);
+            continue;
         }
+        if('\b' == buf[i]){
+            cursorPosition--;
+            if(cursorPosition < 0){
+                cursorPosition = 0;
+            }
+            fb_move_cursor(cursorPosition);
+            continue;
+        }
+
         fb_write_cell(2*cursorPosition, buf[i], FB_GREEN, FB_DARK_GREY);
         cursorPosition++;
     }
     fb_move_cursor(cursorPosition);
-    return 0;
-    
+    return 0; 
 }
 
 

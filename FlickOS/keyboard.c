@@ -56,7 +56,8 @@ static unsigned char kbdus[128] =
     0,  /* F11 Key */
     0,  /* F12 Key */
     0,  /* All other keys are undefined */
-};  
+}; 
+
 enum {CapsRelease = 0xBA, leftShift = 0x2A, rightShift = 0x36, leftShiftRelease = 0xAA, rightShiftRelease= 0xB6};
 static uint8_t CapLocks = 0;
 static uint8_t ShiftL = 0;
@@ -122,6 +123,7 @@ void echo_keyboard(){
     if(temp[0] == 0){
         return;
     }
+
     temp[1] = 0;
     fb_write(temp, 1);
 }
