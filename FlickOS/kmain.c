@@ -7,6 +7,7 @@
 #include "gdt_idt.h"
 #include "printf.h"
 #include "multiboot.h"
+#include "breakpoint.h"
 
 
 
@@ -42,8 +43,9 @@ void kmain(unsigned int ebx){
     unsigned int address_of_module = m->mod_start;
     printf("address_of_module is %x \n", address_of_module);
 
-    call_module_t start_program = (call_module_t) address_of_module;
+    call_module_t start_program = (call_module_t) address_of_module + 1;  //without this +1 everything fails
     printf("about to start program \n");
+    breakpoint();
     start_program();
     printf("program ran \n");
     /* we'll never get here, unless the module code returns */
