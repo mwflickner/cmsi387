@@ -78,10 +78,11 @@ int fb_write(char *buf, unsigned int len){
                 cursorPosition = 0;
             }
             fb_move_cursor(cursorPosition);
+            fb_write_cell(2*cursorPosition, ' ', FB_BLACK, FB_GREEN);
             continue;
         }
 
-        fb_write_cell(2*cursorPosition, buf[i], FB_GREEN, FB_DARK_GREY);
+        fb_write_cell(2*cursorPosition, buf[i], FB_BLACK, FB_GREEN);
         cursorPosition++;
     }
     fb_move_cursor(cursorPosition);
