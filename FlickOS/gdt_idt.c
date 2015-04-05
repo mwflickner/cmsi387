@@ -5,6 +5,7 @@
 #include "gdt.h"
 #include "printf.h"
 #include "keyboard.h"
+#include "paging.h"
 
 //GDT Code
 enum {gdtSize = 5};
@@ -123,7 +124,10 @@ void interrupt_handler(struct cpu_state cpu, unsigned int interrupt, struct stac
     //fb_write("X", 1);
     (void)cpu;
     (void)stack;
-    
+    if(interrupt == 14){
+        //page fault
+        page_fault(stack.error_code);
+    }
     if(interrupt == 33){
         //uint8_t code = read_scan_code();
         //(void)code;
