@@ -8,6 +8,7 @@
 #include "printf.h"
 #include "multiboot.h"
 #include "breakpoint.h"
+#include "paging.h"
 
 
 
@@ -26,9 +27,7 @@ void kmain(unsigned int ebx){
     printf("Address of idt_init() = %x \n", idt_init);
     idt_init();
     pic_init();
-    //asm volatile ("int $0x3");
-    //asm volatile ("int $0x4");
-    //asm volatile ("int $33");
+    //initialize_paging();
 
     multiboot_info_t *mbinfo = (multiboot_info_t *) ebx;
     printf("mbinfo flags: %x \n", mbinfo->flags);

@@ -36,6 +36,9 @@ run: os.iso
 %.o: %.s
 	$(AS) $(ASFLAGS) $< -o $@
 
+%.s: %.c
+	$(CC) -S $(CFLAGS)  $< -o $@
+
 clean:
 	rm $(OBJECTS) kernel.elf os.iso
 
