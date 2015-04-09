@@ -33,7 +33,7 @@ void pic_init(){
 
     //Set the interrupt mask
     /* Only listen to irqs 0, 1, and 2 */
-    outb( 0x21, 0xfd ); /* master PIC */
+    outb( 0x21, 0xf8 ); /* master PIC */ //use (0x21, 0xfd) to only listen to keyboard interrupts
     outb( 0xA1, 0xff ); /* slave PIC */
     asm volatile("sti");
 }

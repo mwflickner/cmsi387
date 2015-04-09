@@ -116,7 +116,7 @@ uint8_t convertToAscii(const uint8_t code){
 
     if(code == CapsRelease){
         CapLocks = !CapLocks;
-        printf("capslocks = %d ", CapLocks);
+        //printf("capslocks = %d ", CapLocks);
         return 0;
     }
     if(code == leftShift){
