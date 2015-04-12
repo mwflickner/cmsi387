@@ -1,6 +1,8 @@
 #include <stdint.h>
 
-uint32_t placement_address;
+extern uint32_t end;
+uint32_t placement_address = (uint32_t)&end;
+
 
 uint32_t kmalloc_int(uint32_t sz, int align, uint32_t *phys) {
   if (align == 1 && (placement_address & 0xFFFFF000)) // If the address is not already page-aligned

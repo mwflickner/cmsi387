@@ -129,8 +129,6 @@ void interrupt_handler(struct cpu_state cpu, unsigned int interrupt, struct stac
         page_fault(stack.error_code);
     }
     if(interrupt == 33){
-        //uint8_t code = read_scan_code();
-        //(void)code;
         echo_keyboard();
     }
     //must be last statement

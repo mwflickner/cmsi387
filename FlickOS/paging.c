@@ -5,7 +5,7 @@
 #include "util.h"
 #include "kheap.h"
 #include "breakpoint.h"
-//code from http://www.jamesmolloy.co.uk/tutorial_html/6.-Paging.html
+//code modified from http://www.jamesmolloy.co.uk/tutorial_html/6.-Paging.html
 // The kernel's page directory
 page_directory_t *kernel_directory=0;
 
