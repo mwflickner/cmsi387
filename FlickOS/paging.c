@@ -4,7 +4,7 @@
 #include "printf.h"
 #include "util.h"
 #include "kheap.h"
-
+#include "breakpoint.h"
 //code from http://www.jamesmolloy.co.uk/tutorial_html/6.-Paging.html
 // The kernel's page directory
 page_directory_t *kernel_directory=0;
@@ -104,6 +104,7 @@ void switch_page_directory(page_directory_t *dir) {
    uint32_t cr0;
    asm volatile("mov %%cr0, %0": "=r"(cr0));
    cr0 |= 0x80000000; // Enable paging!
+   breakpoint();
    asm volatile("mov %0, %%cr0":: "r"(cr0));
 }
 

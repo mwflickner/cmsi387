@@ -27,7 +27,7 @@ void kmain(unsigned int ebx){
     printf("Address of idt_init() = %x \n", idt_init);
     idt_init();
     pic_init();
-    initialize_paging();
+    //initialize_paging();
 
     multiboot_info_t *mbinfo = (multiboot_info_t *) ebx;
     printf("mbinfo flags: %x \n", mbinfo->flags);
