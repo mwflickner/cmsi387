@@ -39,7 +39,7 @@ static void clear_frame(uint32_t frame_addr) {
    uint32_t off = OFFSET_FROM_BIT(frame);
    frames[idx] &= ~(0x1 << off);
 }
-//#if 0
+#if 0
 // Static function to test if a bit is set.
 static uint32_t test_frame(uint32_t frame_addr) {
    uint32_t frame = frame_addr/0x1000;
@@ -47,7 +47,7 @@ static uint32_t test_frame(uint32_t frame_addr) {
    uint32_t off = OFFSET_FROM_BIT(frame);
    return (frames[idx] & (0x1 << off));
 }
-//#endif
+#endif
 // Static function to find the first free frame.
 static uint32_t first_frame() {
    uint32_t i, j;
@@ -180,7 +180,7 @@ void initialize_paging() {
    // to be created where necessary. We can't allocate frames yet because they
    // they need to be identity mapped first below, and yet we can't increase
    // placement_address between identity mapping and enabling the heap!
-   int i = 0;
+   uint32_t i = 0;
    for (i = KHEAP_START; i < KHEAP_START+KHEAP_INITIAL_SIZE; i += 0x1000)
        get_page(i, 1, kernel_directory); 
 
@@ -191,7 +191,7 @@ void initialize_paging() {
    // inside the loop body we actually change placement_address
    // by calling kmalloc(). A while loop causes this to be
    // computed on-the-fly rather than once at the start.
-   uint32_t i = 0;
+   i = 0;
    while (i < placement_address) {
        // Kernel code is readable but not writeable from userspace.
        alloc_frame( get_page(i, 1, kernel_directory), 0, 0);

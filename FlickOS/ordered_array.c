@@ -1,6 +1,8 @@
 // Code modified from http://www.jamesmolloy.co.uk/tutorial_html/7.-The%20Heap.html
 
 #include "ordered_array.h"
+#include "kheap.h"
+#include "util.h"
 #include <stdint.h>
 
 int8_t standard_lessthan_predicate(type_t a, type_t b)
@@ -30,10 +32,12 @@ ordered_array_t place_ordered_array(void *addr, uint32_t max_size, lessthan_pred
    return to_ret;
 }
 
+#if 0
 void destroy_ordered_array(ordered_array_t *array)
 {
 // kfree(array->array);
 }
+#endif
 
 void insert_ordered_array(type_t item, ordered_array_t *array)
 {

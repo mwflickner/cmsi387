@@ -7,6 +7,8 @@
 #define HEAP_MAGIC        0x123890AB
 #define HEAP_MIN_SIZE     0x70000
 
+
+#include "ordered_array.h"
 /**
   Size information for a hole/block
 **/
