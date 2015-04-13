@@ -1,4 +1,4 @@
-OBJECTS = loader.o kmain.o io.o screen.o serial.o gdt.o idt.o gdt_idt.o pic.o printf.o keyboard.o breakpoint.o util.o kheap.o paging.o
+OBJECTS = loader.o kmain.o io.o screen.o serial.o gdt.o idt.o gdt_idt.o pic.o printf.o keyboard.o breakpoint.o util.o kheap.o paging.o ordered_array.o
 CC = gcc
 CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
 			 -nostartfiles -nodefaultlibs -Wall -Wextra -Werror -I include -c
