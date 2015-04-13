@@ -1,9 +1,11 @@
 // Code modified from http://www.jamesmolloy.co.uk/tutorial_html/7.-The%20Heap.html
-
+#include <stdint.h> 
 #include "ordered_array.h"
 #include "kheap.h"
 #include "util.h"
-#include <stdint.h>
+#include "printf.h"
+#include "breakpoint.h"
+
 
 int8_t standard_lessthan_predicate(type_t a, type_t b)
 {
@@ -29,6 +31,7 @@ ordered_array_t place_ordered_array(void *addr, uint32_t max_size, lessthan_pred
    to_ret.size = 0;
    to_ret.max_size = max_size;
    to_ret.less_than = less_than;
+   breakpoint();
    return to_ret;
 }
 

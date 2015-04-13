@@ -1,5 +1,4 @@
 #include <stdint.h>
-#include "gdt_idt.h"
 #include "paging.h"
 #include "printf.h"
 #include "util.h"
@@ -105,7 +104,6 @@ void switch_page_directory(page_directory_t *dir) {
    uint32_t cr0;
    asm volatile("mov %%cr0, %0": "=r"(cr0));
    cr0 |= 0x80000000; // Enable paging!
-   breakpoint();
    asm volatile("mov %0, %%cr0":: "r"(cr0));
 }
 
@@ -207,12 +205,8 @@ void initialize_paging() {
 
    // Now, enable paging!
    switch_page_directory(kernel_directory);
-
    // Initialise the kernel heap.
    kheap = create_heap(KHEAP_START, KHEAP_START+KHEAP_INITIAL_SIZE, 0xCFFFF000, 0, 0); 
    // Before we enable paging, we must register our page fault handler.
    //register_interrupt_handler(14, page_fault);
-
-   // Now, enable paging!
-   switch_page_directory(kernel_directory);
 }

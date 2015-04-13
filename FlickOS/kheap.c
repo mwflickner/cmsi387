@@ -3,6 +3,7 @@
 #include "kheap.h"
 #include "paging.h"
 #include "util.h"
+#include "printf.h"
 
 extern uint32_t end;
 uint32_t placement_address = (uint32_t)&end;
@@ -85,17 +86,16 @@ static int8_t header_t_less_than(void*a, void *b)
 heap_t *create_heap(uint32_t start, uint32_t end_addr, uint32_t max, uint8_t supervisor, uint8_t readonly)
 {
    heap_t *heap = (heap_t*)kmalloc(sizeof(heap_t));
-
    // All our assumptions are made on startAddress and endAddress being page-aligned.
    ASSERT(start%0x1000 == 0);
    ASSERT(end_addr%0x1000 == 0);
-
+   printf("asserts done \n");
    // Initialise the index.
    heap->index = place_ordered_array( (void*)start, HEAP_INDEX_SIZE, &header_t_less_than);
-
+   printf("ordered array placed \n");
    // Shift the start address forward to resemble where we can start putting data.
    start += sizeof(type_t)*HEAP_INDEX_SIZE;
-
+   printf("startgrabbed \n");
    // Make sure the start address is page-aligned.
    if ((start & 0xFFFFF000) != 0)
    {
