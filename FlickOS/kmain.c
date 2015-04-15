@@ -17,7 +17,7 @@ void kmain(unsigned int ebx){
 
     init_printf((void*) 0,putc);
 
-    char welcome[] = "Welcome to FlickOS! GDT Loaded. \n";
+    char welcome[] = "Welcome to SwegOS! GDT Loaded. \n";
     unsigned int size = sizeof(welcome) - 1;
     fb_write(welcome, size);
     serial_write(welcome, size);
