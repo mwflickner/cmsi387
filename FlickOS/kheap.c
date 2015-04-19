@@ -12,19 +12,30 @@ heap_t *kheap=0;
 
 
 uint32_t kmalloc_int(uint32_t sz, int align, uint32_t *phys) {
-  if (align == 1 && (placement_address & 0xFFFFF000)) // If the address is not already page-aligned
-  {
-    // Align it.
-    placement_address &= 0xFFFFF000;
-    placement_address += 0x1000;
-  }
-  if (phys)
-  {
-    *phys = placement_address;
-  }
-  uint32_t tmp = placement_address;
-  placement_address += sz;
-  return tmp;
+    if (kheap != 0){
+        void *addr = alloc(sz, (uint8_t)align, kheap);
+        if (phys != 0)
+        {
+            page_t *page = get_page((uint32_t)addr, 0, kernel_directory);
+            *phys = (page->frame*0x1000) + ((uint32_t)addr&0xFFF);
+        }
+        return (uint32_t)addr;
+    }
+    else {
+      if (align == 1 && (placement_address & 0xFFFFF000)) // If the address is not already page-aligned
+      {
+        // Align it.
+        placement_address &= 0xFFFFF000;
+        placement_address += 0x1000;
+      }
+      if (phys)
+      {
+        *phys = placement_address;
+      }
+      uint32_t tmp = placement_address;
+      placement_address += sz;
+      return tmp;
+    }
 } 
 
 uint32_t kmalloc_a(uint32_t sz)

@@ -43,6 +43,7 @@ void kmain(unsigned int ebx){
     printf("\nc: %x \n", c);
 
     kfree((void*)c);
+    printf("C free");
     kfree((void*)b);
     uint32_t d = kmalloc(12);
     printf(", d: %x", d); 
