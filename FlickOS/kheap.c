@@ -6,7 +6,7 @@
 #include "printf.h"
 
 extern uint32_t end;
-uint32_t placement_address = (uint32_t)&end;
+extern uint32_t placement_address; //(uint32_t)&end;
 extern page_directory_t *kernel_directory;
 heap_t *kheap=0;
 
