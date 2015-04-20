@@ -42,29 +42,34 @@ void kmain(unsigned int ebx){
     unsigned int address_of_module = m->mod_start;
     printf("address_of_module is %x \n", address_of_module);
     call_module_t start_program = (call_module_t) address_of_module + 1;//without this +1 everything fails
-    /*now that the module is built we can use the mod_end as a placement address
-        which allows for the module to be included in the paging */
+    //now that the module is built we can use the mod_end as a placement address,
+    //which allows for the module to be included in the paging
     placement_address = m->mod_end;
 
     //Now we can start paging
     uint32_t a = kmalloc(8);
     initialize_paging();
-    //uint32_t *ptr = (uint32_t*)0xA0000000;
-    //uint32_t do_page_fault = *ptr;
-    //printf("PageFault: %x", do_page_fault);
+    uint32_t *ptr1 = (uint32_t*)(placement_address + 0xFD8);
+    uint32_t do_page_fault1 = *ptr1;
+    printf("PageFault: %x \n", do_page_fault1);
+
+    //uncomment this to trigger a page fault 
+    //uint32_t *ptr2 = (uint32_t*)(placement_address + 0xFD9);
+    //uint32_t do_page_fault2 = *ptr2;
+    //printf("PageFault: %x \n", do_page_fault2);
     
     //Malloc and Free heap testing
     uint32_t b = kmalloc(8);
     uint32_t c = kmalloc(8);
     printf("a: %x,", a);
     printf(", b: %x", b);
-    printf("\nc: %x \n", c);
+    printf("c: %x \n", c);
 
     kfree((void*)c);
     printf("C free");
     kfree((void*)b);
     uint32_t d = kmalloc(12);
-    printf(", d: %x", d); 
+    printf(", d: %x \n", d); 
 
     breakpoint();
 

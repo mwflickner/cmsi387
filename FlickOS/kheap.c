@@ -106,7 +106,7 @@ heap_t *create_heap(uint32_t start, uint32_t end_addr, uint32_t max, uint8_t sup
    printf("ordered array placed \n");
    // Shift the start address forward to resemble where we can start putting data.
    start += sizeof(type_t)*HEAP_INDEX_SIZE;
-   printf("startgrabbed \n");
+   printf("start address grabbed \n");
    // Make sure the start address is page-aligned.
    if ((start & 0xFFFFF000) != 0)
    {
