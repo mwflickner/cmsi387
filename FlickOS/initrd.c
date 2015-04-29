@@ -42,7 +42,7 @@ static struct dirent *initrd_readdir(fs_node_t *node, uint32_t index){
 
 static fs_node_t *initrd_finddir(fs_node_t *node, char *name){
     if (node == initrd_root && !strcmp(name, "dev")){
-    	return initrd_dev;
+        return initrd_dev;
     }
 
     uint32_t i;
