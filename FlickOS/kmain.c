@@ -11,6 +11,7 @@
 #include "kheap.h"
 #include "paging.h"
 #include "timer.h"
+#include "task.h"
 
 uint32_t placement_address = 0; //(uint32_t)&end;
 uint32_t initial_esp; // New global variable. 
@@ -32,7 +33,7 @@ void kmain(unsigned int ebx, uint32_t initial_stack){
     idt_init();
     pic_init();
     timer_init(50);
-    
+
     //this needs to come before paging stuff so multiboot can be including in paging
     multiboot_info_t *mbinfo = (multiboot_info_t *) ebx;
     printf("mbinfo flags: %x \n", mbinfo->flags);
@@ -76,6 +77,14 @@ void kmain(unsigned int ebx, uint32_t initial_stack){
     printf(", d: %x \n", d); 
 
     breakpoint();
+
+    initialize_tasking();
+    printf("about to fork \n");
+    // Create a new process in a new address space which is a clone of this.
+    int ret = fork();
+    printf("fork() returned %x, ",ret);
+    printf("and getpid() returned %x \n", getpid());
+    printf("sweeeggggggggggggg \n");
 
     //now call start the program 
     printf("about to start program \n");

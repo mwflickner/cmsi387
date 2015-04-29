@@ -3,17 +3,17 @@
 #include "gdt_idt.h"
 #include "screen.h"
 #include "printf.h"
-
+#include "task.h"
 
 
 uint32_t ticks = 0;
 
 void timer_callback(){
     ticks++;
-    //if(ticks % 100 == 0){
+    switch_task();
+    if(ticks % 50 == 0){
         printf("%x", ticks);
-    //switch_task();
-   // }
+   }
 }
 
 void timer_init(uint32_t frequency){

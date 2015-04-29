@@ -232,8 +232,8 @@ page_directory_t *clone_directory(page_directory_t *src){
             dir->tablesPhysical[i] = phys | 0x07;
         }
     }
-    breakpoint();
-    printf("exited for loop");
+    //breakpoint();
+    //printf("exited for loop");
     return dir;
 }
 
