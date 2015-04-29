@@ -52,7 +52,7 @@ static fs_node_t *initrd_finddir(fs_node_t *node, char *name){
     return 0;
 }
 
-fs_node_t *initialise_initrd(uint32_t location){
+fs_node_t *initialize_initrd(uint32_t location){
     // Initialise the main and file header pointers and populate the root directory.
     initrd_header = (initrd_header_t *)location;
     file_headers = (initrd_file_header_t *) (location+sizeof(initrd_header_t));

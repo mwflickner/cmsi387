@@ -5,8 +5,12 @@
 
 void* memset (void* ptr, int value, uint32_t num);
 void memcpy(uint8_t *dest, const char *src, uint32_t len);
+
 int32_t strcmp(char *string1, char *string2);
+
 char *strcpy(char *dest, const char *src);
+char *my_strcpy(char dest[], const char source[]);
+
 uint32_t strlen(char *src);
 
 #define PANIC(msg) panic(msg, __FILE__, __LINE__);

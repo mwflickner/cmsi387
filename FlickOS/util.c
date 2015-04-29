@@ -2,6 +2,12 @@
 #include "util.h"
 #include "printf.h"
 
+void memcpy(uint8_t *dest, const char *src, uint32_t len){
+    const uint8_t *sp = (const uint8_t *)src;
+    uint8_t *dp = (uint8_t *)dest;
+    for(; len != 0; len--) *dp++ = *sp++;
+}
+
 void* memset (void* ptr, int value, uint32_t num){
 	uint8_t *array = ptr;
 	uint8_t val = (uint8_t)value;
@@ -12,12 +18,6 @@ void* memset (void* ptr, int value, uint32_t num){
 	return array;
 }
 
-void memcpy(uint8_t *dest, const char *src, uint32_t len){
-    const uint8_t *sp = (const uint8_t *)src;
-    uint8_t *dp = (uint8_t *)dest;
-    for(; len != 0; len--) *dp++ = *sp++;
-}
-
 //returns -1 if String1 < String2
 //returns 1 if String1 > String2 or if they are the same length
 //and String1 != String2
@@ -26,12 +26,12 @@ int32_t strcmp(char *string1, char *string2){
     uint32_t i;
     int32_t result;
     //returns -1 if string1 is smaller than string2
-    if(sizeof(string1) < sizeof(string2)){
+    if ((sizeof(string1)) < (sizeof(string2))){
         result = -1;
         return result;
     }
     //returns 1 if string2 is smaller than string1
-    if(sizeof(string1) > sizeof(string2)){
+    if ((sizeof(string1)) > (sizeof(string2))){
         result = 1;
         return result;
     }
@@ -45,14 +45,24 @@ int32_t strcmp(char *string1, char *string2){
     result = 0;
     return result;
 }
-
+/*
 char *strcpy(char *dest, const char *src){
     do {
       *dest++ = *src++;
     }
     while (*src != 0);
-    //had to add return to get compiling
     return dest;
+}
+*/
+
+char *strcpy(char dest[], const char source[]){
+    int i = 0;
+    while (source[i] != '\0'){
+        dest[i] = source[i];
+        i++;
+    }
+    dest[i] = '\0';
+    return(dest);
 }
 
 
