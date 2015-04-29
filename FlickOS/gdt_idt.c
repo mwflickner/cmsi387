@@ -6,6 +6,7 @@
 #include "printf.h"
 #include "keyboard.h"
 #include "paging.h"
+#include "timer.h"
 
 //GDT Code
 enum {gdtSize = 5};
@@ -124,6 +125,9 @@ void interrupt_handler(struct cpu_state cpu, unsigned int interrupt, struct stac
     //fb_write("X", 1);
     (void)cpu;
     (void)stack;
+    if(interrupt == 0){
+        timer_callback();
+    }
     if(interrupt == 14){
         //page fault
         page_fault(stack.error_code);

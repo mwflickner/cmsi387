@@ -10,10 +10,13 @@
 #include "breakpoint.h"
 #include "kheap.h"
 #include "paging.h"
+#include "timer.h"
 
 uint32_t placement_address = 0; //(uint32_t)&end;
+uint32_t initial_esp; // New global variable. 
 
-void kmain(unsigned int ebx){
+void kmain(unsigned int ebx, uint32_t initial_stack){
+    initial_esp = initial_stack;
     gdt_init();
 
     init_printf((void*) 0,putc);
@@ -28,6 +31,7 @@ void kmain(unsigned int ebx){
     printf("Address of idt_init() = %x \n", idt_init);
     idt_init();
     pic_init();
+    timer_init(50);
 
     //this needs to come before paging stuff so multiboot can be including in paging
     multiboot_info_t *mbinfo = (multiboot_info_t *) ebx;
