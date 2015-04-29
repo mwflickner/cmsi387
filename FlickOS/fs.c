@@ -1,3 +1,5 @@
+//code modified from http://www.jamesmolloy.co.uk/tutorial_html/8.-The%20VFS%20and%20the%20initrd.html
+
 #include <stdint.h>
 #include "fs.h"
 #include "printf.h"

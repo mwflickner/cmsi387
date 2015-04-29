@@ -14,6 +14,9 @@ kernel.elf: $(OBJECTS)
 program: program.s
 	nasm -f bin $< -o iso/modules/$@
 
+initrd: initrd.s
+	nasm -f bin $< -o iso/modules/$@
+
 os.iso: kernel.elf
 	cp kernel.elf iso/boot/kernel.elf
 	genisoimage -R                              \

@@ -1,3 +1,5 @@
+//code modified from http://www.jamesmolloy.co.uk/tutorial_html/6.-Paging.html
+
 #include <stdint.h>
 #include "paging.h"
 #include "printf.h"

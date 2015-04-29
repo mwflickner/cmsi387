@@ -1,7 +1,7 @@
 #ifndef INCLUDE_PAGING_H
 #define INCLUDE_PAGING_H
 
-//code modified     from http://www.jamesmolloy.co.uk/tutorial_html/6.-Paging.html
+//code modified from http://www.jamesmolloy.co.uk/tutorial_html/6.-Paging.html
 
 #include <stdint.h>
 //may also need to include interrupt stuff

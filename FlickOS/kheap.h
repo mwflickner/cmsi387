@@ -1,3 +1,5 @@
+////code modified from http://www.jamesmolloy.co.uk/tutorial_html/7.-The%20Heap.html
+
 #ifndef INCLUDE_KHEAP_H
 #define INCLUDE_KHEAP_H
 
