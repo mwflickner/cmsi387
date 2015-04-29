@@ -125,7 +125,7 @@ void interrupt_handler(struct cpu_state cpu, unsigned int interrupt, struct stac
     //fb_write("X", 1);
     (void)cpu;
     (void)stack;
-    if(interrupt == 0){
+    if(interrupt == 32){
         timer_callback();
     }
     if(interrupt == 14){

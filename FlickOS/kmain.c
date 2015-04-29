@@ -32,7 +32,7 @@ void kmain(unsigned int ebx, uint32_t initial_stack){
     idt_init();
     pic_init();
     timer_init(50);
-
+    
     //this needs to come before paging stuff so multiboot can be including in paging
     multiboot_info_t *mbinfo = (multiboot_info_t *) ebx;
     printf("mbinfo flags: %x \n", mbinfo->flags);

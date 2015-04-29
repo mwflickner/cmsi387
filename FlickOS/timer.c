@@ -10,8 +10,10 @@ uint32_t ticks = 0;
 
 void timer_callback(){
     ticks++;
-    printf("%x", ticks);
+    //if(ticks % 100 == 0){
+        printf("%x", ticks);
     //switch_task();
+   // }
 }
 
 void timer_init(uint32_t frequency){
@@ -28,4 +30,5 @@ void timer_init(uint32_t frequency){
     // Send the frequency divisor.
     outb(0x40, l);
     outb(0x40, h);
+    printf("timer initiated");
 }
