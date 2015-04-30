@@ -85,6 +85,7 @@ void kmain(unsigned int ebx, uint32_t initial_stack){
     printf("fork() returned %x, ",ret);
     printf("and getpid() returned %x \n", getpid());
     printf("sweeeggggggggggggg \n");
+    printf("Welcome to Icarus \n");
 
     //now call start the program 
     printf("about to start program \n");
