@@ -124,6 +124,7 @@ int fork(){
         // We are the parent, so set up the esp/ebp/eip for our child.
         uint32_t esp; asm volatile("mov %%esp, %0" : "=r"(esp));
         uint32_t ebp; asm volatile("mov %%ebp, %0" : "=r"(ebp));
+		
         new_task->esp = esp;
         new_task->ebp = ebp;
         new_task->eip = eip;
@@ -174,7 +175,12 @@ void switch_task(){
     if (!current_task){
         current_task = ready_queue;
     }
+    eip = current_task->eip;
+    esp = current_task->esp;
+    ebp = current_task->ebp;
 
+    // Make sure the memory manager knows we've changed page directory.
+    current_directory = current_task->page_directory;
     // Here we:
     // * Stop interrupts so we don't get interrupted.
     // * Temporarily put the new EIP location in ECX.

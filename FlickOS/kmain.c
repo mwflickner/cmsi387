@@ -89,6 +89,7 @@ void kmain(unsigned int ebx, uint32_t initial_stack){
 
     //now call start the program 
     printf("about to start program \n");
+    breakpoint();
     start_program();
     printf("program ran \n");
     /* we'll never get here, unless the module code returns */

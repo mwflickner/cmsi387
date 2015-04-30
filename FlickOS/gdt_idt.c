@@ -126,16 +126,22 @@ void interrupt_handler(struct cpu_state cpu, unsigned int interrupt, struct stac
     (void)cpu;
     (void)stack;
     if(interrupt == 32){
+        //clock
         timer_callback();
+        pic_acknowledge(interrupt);
+        return;
     }
     if(interrupt == 14){
         //page fault
         page_fault(stack.error_code);
+        pic_acknowledge(interrupt);
+        return;
     }
     if(interrupt == 33){
+        //keyboard
         echo_keyboard();
+        pic_acknowledge(interrupt);
+        return;
     }
-    //must be last statement
-    pic_acknowledge(interrupt);
 }
 

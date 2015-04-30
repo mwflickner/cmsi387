@@ -84,8 +84,8 @@ void alloc_frame(page_t *page, int is_kernel, int is_writeable) {
        }
        set_frame(idx*0x1000); // this frame is now ours!
        page->present = 1; // Mark it as present.
-       page->rw = (is_writeable)?1:0; // Should the page be writeable?
-       page->user = (is_kernel)?0:1; // Should the page be user-mode?
+       page->rw = (is_writeable == 1)?1:0; // Should the page be writeable?
+       page->user = (is_kernel == 1)?0:1; // Should the page be user-mode?
        page->frame = idx;
    }
 }
@@ -250,7 +250,7 @@ void initialize_paging() {
    // Let's make a page directory.
    uint32_t phys;
    kernel_directory = (page_directory_t*)kmalloc_a(sizeof(page_directory_t));
-   memset(kernel_directory, 0, sizeof(page_directory_t));
+   memset(kernel_directory, 0, (sizeof(page_directory_t)));
    //current_directory = kernel_directory;
    kernel_directory->physicalAddr = (uint32_t)kernel_directory->tablesPhysical;
    // Map some pages in the kernel heap area.
