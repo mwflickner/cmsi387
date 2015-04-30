@@ -84,7 +84,7 @@ void kmain(unsigned int ebx, uint32_t initial_stack){
     int ret = fork();
     printf("fork() returned %x, ",ret);
     printf("and getpid() returned %x \n", getpid());
-    printf("sweeeggggggggggggg \n");
+    printf("sweeeggggggggggggg sweg \n");
     printf("Welcome to Icarus \n");
 
     //now call start the program 
