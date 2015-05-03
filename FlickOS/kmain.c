@@ -49,11 +49,12 @@ void kmain(unsigned int ebx, uint32_t initial_stack){
     call_module_t start_program = (call_module_t) address_of_module + 1;//without this +1 everything fails
     //now that the module is built we can use the mod_end as a placement address,
     //which allows for the module to be included in the paging
-    placement_address = m->mod_end;
+    placement_address = m->mod_end + 0x00000000;
 
     //Now we can start paging
     uint32_t a = kmalloc(8);
     initialize_paging();
+    printf("paging up");
     uint32_t *ptr1 = (uint32_t*)(placement_address + 0xFD8);
     uint32_t do_page_fault1 = *ptr1;
     printf("PageFault: %x \n", do_page_fault1);
