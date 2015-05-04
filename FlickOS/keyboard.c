@@ -105,7 +105,7 @@ static uint8_t ShiftR = 0;
 int magicNum = 'a' - 'A';
 
 uint8_t toUpperCase(uint8_t character){
-   return character - magicNum;
+    return character - magicNum;
 }
 
 uint8_t toLowerCase(uint8_t character){

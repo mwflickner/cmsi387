@@ -40,8 +40,7 @@
 */
 char *fb = (char *) 0x000B8000;
 int cursorPosition = 0;
-void fb_write_cell(unsigned int i, char c, unsigned char fg, unsigned char bg)
-{
+void fb_write_cell(unsigned int i, char c, unsigned char fg, unsigned char bg){
     fb[i] = c;
     fb[i + 1] = ((fg & 0x0F) << 4) | (bg & 0x0F);
 }
@@ -52,8 +51,7 @@ void fb_write_cell(unsigned int i, char c, unsigned char fg, unsigned char bg)
  *
  *  @param pos The new position of the cursor
  */
-void fb_move_cursor(unsigned short pos)
-{
+void fb_move_cursor(unsigned short pos){
     outb(FB_COMMAND_PORT, FB_HIGH_BYTE_COMMAND);
     outb(FB_DATA_PORT,    ((pos >> 8) & 0x00FF));
     outb(FB_COMMAND_PORT, FB_LOW_BYTE_COMMAND);
@@ -92,14 +90,14 @@ int fb_write(char *buf, unsigned int len){
 int fb_clock_write(char *buf, unsigned int len){
     unsigned int i;
     for(i=0; i<len; i++){
-        fb_write_cell(80-len, buf[i], FB_BLACK, FB_GREEN);
+        fb_write_cell(2*80 - 2*(len - i), buf[i], FB_BLACK, FB_GREEN);
     }
     return 0;
 }
 
 
 
-void putc ( void* p, char c) {
+void putc(void* p, char c){
     char temp[2];
     temp[0] = c;
     temp[1] = 0;

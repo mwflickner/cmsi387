@@ -43,13 +43,14 @@ void pic_init(){
  *  @param num The number of the interrupt
  */
 void pic_acknowledge(unsigned int interrupt){
-    if (interrupt < PIC1_START_INTERRUPT || interrupt > PIC2_END_INTERRUPT) {
+    if(interrupt < PIC1_START_INTERRUPT || interrupt > PIC2_END_INTERRUPT){
         return;
     }
 
-    if (interrupt < PIC2_START_INTERRUPT) {
+    if(interrupt < PIC2_START_INTERRUPT){
         outb(PIC1_PORT_A, PIC_ACK);
-    } else {
+    } 
+    else {
         outb(PIC2_PORT_A, PIC_ACK);
     }
 }

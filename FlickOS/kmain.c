@@ -13,8 +13,8 @@
 #include "timer.h"
 #include "task.h"
 
-uint32_t placement_address = 0; //(uint32_t)&end;
-uint32_t initial_esp; // New global variable. 
+uint32_t placement_address = 0;
+uint32_t initial_esp; 
 
 void kmain(unsigned int ebx, uint32_t initial_stack){
     initial_esp = initial_stack;
@@ -22,13 +22,10 @@ void kmain(unsigned int ebx, uint32_t initial_stack){
 
     init_printf((void*) 0,putc);
 
-    char welcome[] = "Welcome to SwegOS! GDT Loaded. \n";
+    char welcome[] = "Welcome to Icarus!\nGDT Loaded. \n";
     unsigned int size = sizeof(welcome) - 1;
     fb_write(welcome, size);
     serial_write(welcome, size);
-    char sweg[] = "Do you even sweg? \n";
-    unsigned int swegSize = sizeof(sweg) - 1;
-    fb_write(sweg, swegSize);
     printf("Address of idt_init() = %x \n", idt_init);
     idt_init();
     pic_init();
@@ -49,12 +46,14 @@ void kmain(unsigned int ebx, uint32_t initial_stack){
     call_module_t start_program = (call_module_t) address_of_module + 1;//without this +1 everything fails
     //now that the module is built we can use the mod_end as a placement address,
     //which allows for the module to be included in the paging
-    placement_address = m->mod_end + 0x00000000;
+    placement_address = m->mod_end;
 
     //Now we can start paging
     uint32_t a = kmalloc(8);
     initialize_paging();
-    printf("paging up");
+    printf("paging up \n");
+
+    //0xFD8 is the last address before a page fault occurs
     uint32_t *ptr1 = (uint32_t*)(placement_address + 0xFD8);
     uint32_t do_page_fault1 = *ptr1;
     printf("PageFault: %x \n", do_page_fault1);
@@ -84,11 +83,8 @@ void kmain(unsigned int ebx, uint32_t initial_stack){
     int ret = fork();
     printf("fork() returned %x, ",ret);
     printf("and getpid() returned %x \n", getpid());
-    printf("sweeeggggggggggggg sweg \n");
     //switch_task();
-    printf("fork() returned %x, ",ret);
-    printf("and getpid() returned %x \n", getpid());
-    printf("Welcome to Icarus \n");
+    printf("Note: errors begin to occur when switch_task() is called. Debugging in process.\n");
 
     //now call start the program 
     printf("about to start program \n");
