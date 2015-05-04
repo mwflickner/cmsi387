@@ -21,7 +21,7 @@ void kmain(unsigned int ebx, uint32_t initial_stack){
     gdt_init();
 
     init_printf((void*) 0,putc);
-
+    clear_screen();
     char welcome[] = "Welcome to Icarus!\nGDT Loaded. \n";
     unsigned int size = sizeof(welcome) - 1;
     fb_write(welcome, size);

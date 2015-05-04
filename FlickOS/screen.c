@@ -95,7 +95,13 @@ int fb_clock_write(char *buf, unsigned int len){
     return 0;
 }
 
-
+int clear_screen(){
+    unsigned int i;
+    for(i=0; i<2*80*25; i= i+2){
+        fb_write_cell(i, ' ', FB_BLACK, FB_GREEN);
+    }
+    return 0;
+}
 
 void putc(void* p, char c){
     char temp[2];
