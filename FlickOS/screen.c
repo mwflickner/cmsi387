@@ -61,7 +61,7 @@ void fb_move_cursor(unsigned short pos)
 }
 
 int fb_write(char *buf, unsigned int len){
-    unsigned int i=0;
+    unsigned int i;
     //int size = sizeof(buf);
     for(i=0; i<len; i++){
         if('\n' == buf[i]){
@@ -87,6 +87,14 @@ int fb_write(char *buf, unsigned int len){
     }
     fb_move_cursor(cursorPosition);
     return 0; 
+}
+
+int fb_clock_write(char *buf, unsigned int len){
+    unsigned int i;
+    for(i=0; i<len; i++){
+        fb_write_cell(80-len, buf[i], FB_BLACK, FB_GREEN);
+    }
+    return 0;
 }
 
 

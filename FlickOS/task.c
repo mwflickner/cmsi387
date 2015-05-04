@@ -4,6 +4,8 @@
 #include "task.h"
 #include "paging.h"
 #include "kheap.h"
+#include "printf.h"
+#include "breakpoint.h"
 
 // The currently running task.
 volatile task_t *current_task;
@@ -171,14 +173,18 @@ void switch_task()
     // Get the next task to run.
     current_task = current_task->next;
     // If we fell off the end of the linked list start again at the beginning.
-    if (!current_task) current_task = ready_queue;
+    if (!current_task){
+        current_task = ready_queue;
+    }
 
     eip = current_task->eip;
     esp = current_task->esp;
     ebp = current_task->ebp;
-
+    
     // Make sure the memory manager knows we've changed page directory.
     current_directory = current_task->page_directory;
+    printf("got here \n");
+    breakpoint();
     // Here we:
     // * Stop interrupts so we don't get interrupted.
     // * Temporarily puts the new EIP location in ECX.

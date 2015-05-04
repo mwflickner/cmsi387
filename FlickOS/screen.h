@@ -3,6 +3,8 @@
 
 int fb_write(char *buf, unsigned int len);
 
+int fb_clock_write(char *buf, unsigned int len);
+
 void putc ( void* p, char c);
 
 #endif /* INCLUDE_SCREEN_H */

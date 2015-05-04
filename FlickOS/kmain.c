@@ -77,7 +77,6 @@ void kmain(unsigned int ebx, uint32_t initial_stack){
     uint32_t d = kmalloc(12);
     printf(", d: %x \n", d); 
 
-    breakpoint();
 
     initialize_tasking();
     printf("about to fork \n");
@@ -86,11 +85,13 @@ void kmain(unsigned int ebx, uint32_t initial_stack){
     printf("fork() returned %x, ",ret);
     printf("and getpid() returned %x \n", getpid());
     printf("sweeeggggggggggggg sweg \n");
+    //switch_task();
+    printf("fork() returned %x, ",ret);
+    printf("and getpid() returned %x \n", getpid());
     printf("Welcome to Icarus \n");
 
     //now call start the program 
     printf("about to start program \n");
-    breakpoint();
     start_program();
     printf("program ran \n");
     /* we'll never get here, unless the module code returns */

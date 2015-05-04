@@ -10,9 +10,12 @@ uint32_t ticks = 0;
 
 void timer_callback(){
     ticks++;
-    switch_task();
-    if(ticks % 50 == 0){
-        printf("%x", ticks);
+    //printf("timer");
+    //switch_task();
+    if(ticks % 32 == 0){
+        char timer[32];
+        sprintf(timer, "%d", ticks);
+        fb_clock_write(timer, sizeof(timer));
    }
 }
 
