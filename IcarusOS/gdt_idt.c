@@ -16,29 +16,29 @@ gdt_entry gdtTable[gdtSize];
 
 // Set the value of one GDT entry.
 static void gdt_set_gate(int32_t num, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran) {
-   gdtTable[num].base_low    = (base & 0xFFFF);
-   gdtTable[num].base_middle = (base >> 16) & 0xFF;
-   gdtTable[num].base_high   = (base >> 24) & 0xFF;
+    gdtTable[num].base_low    = (base & 0xFFFF);
+    gdtTable[num].base_middle = (base >> 16) & 0xFF;
+    gdtTable[num].base_high   = (base >> 24) & 0xFF;
 
-   gdtTable[num].limit_low   = (limit & 0xFFFF);
-   gdtTable[num].granularity = (limit >> 16) & 0x0F;
+    gdtTable[num].limit_low   = (limit & 0xFFFF); 
+    gdtTable[num].granularity = (limit >> 16) & 0x0F;
 
-   gdtTable[num].granularity |= gran & 0xF0;
-   gdtTable[num].access      = access;
+    gdtTable[num].granularity |= gran & 0xF0;
+    gdtTable[num].access      = access;
 } 
 
 
 void gdt_init() {
-   gdtP.limit = (sizeof(gdtTable) - 1);
-   gdtP.base = &gdtTable[0];
+    gdtP.limit = (sizeof(gdtTable) - 1);
+    gdtP.base = &gdtTable[0];
 
-   gdt_set_gate(0, 0, 0, 0, 0);                // Null segment
-   gdt_set_gate(1, 0, 0xFFFFFFFF, 0x9A, 0xCF); // Code segment
-   gdt_set_gate(2, 0, 0xFFFFFFFF, 0x92, 0xCF); // Data segment
-   gdt_set_gate(3, 0, 0xFFFFFFFF, 0xFA, 0xCF); // User mode code segment
-   gdt_set_gate(4, 0, 0xFFFFFFFF, 0xF2, 0xCF); // User mode data segment
+    gdt_set_gate(0, 0, 0, 0, 0);                // Null segment
+    gdt_set_gate(1, 0, 0xFFFFFFFF, 0x9A, 0xCF); // Code segment
+    gdt_set_gate(2, 0, 0xFFFFFFFF, 0x92, 0xCF); // Data segment
+    gdt_set_gate(3, 0, 0xFFFFFFFF, 0xFA, 0xCF); // User mode code segment
+    gdt_set_gate(4, 0, 0xFFFFFFFF, 0xF2, 0xCF); // User mode data segment
 
-   gdt_flush(&gdtP);
+    gdt_flush(&gdtP);
 }
 
 
@@ -126,16 +126,24 @@ void interrupt_handler(struct cpu_state cpu, unsigned int interrupt, struct stac
     (void)cpu;
     (void)stack;
     if(interrupt == 32){
+        //clock
         timer_callback();
+        pic_acknowledge(interrupt);
+        return;
     }
     if(interrupt == 14){
         //page fault
         page_fault(stack.error_code);
+        pic_acknowledge(interrupt);
+        return;
     }
     if(interrupt == 33){
+        //keyboard
         echo_keyboard();
+        pic_acknowledge(interrupt);
+        return;
     }
-    //must be last statement
+
     pic_acknowledge(interrupt);
 }
 

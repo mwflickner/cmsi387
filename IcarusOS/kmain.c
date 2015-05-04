@@ -13,22 +13,19 @@
 #include "timer.h"
 #include "task.h"
 
-uint32_t placement_address = 0; //(uint32_t)&end;
-uint32_t initial_esp; // New global variable. 
+uint32_t placement_address = 0;
+uint32_t initial_esp; 
 
 void kmain(unsigned int ebx, uint32_t initial_stack){
     initial_esp = initial_stack;
     gdt_init();
 
     init_printf((void*) 0,putc);
-
-    char welcome[] = "Welcome to SwegOS! GDT Loaded. \n";
+    clear_screen();
+    char welcome[] = "Welcome to Icarus!\nGDT Loaded. \n";
     unsigned int size = sizeof(welcome) - 1;
     fb_write(welcome, size);
     serial_write(welcome, size);
-    char sweg[] = "Do you even sweg? \n";
-    unsigned int swegSize = sizeof(sweg) - 1;
-    fb_write(sweg, swegSize);
     printf("Address of idt_init() = %x \n", idt_init);
     idt_init();
     pic_init();
@@ -54,6 +51,9 @@ void kmain(unsigned int ebx, uint32_t initial_stack){
     //Now we can start paging
     uint32_t a = kmalloc(8);
     initialize_paging();
+    printf("paging up \n");
+
+    //0xFD8 is the last address before a page fault occurs
     uint32_t *ptr1 = (uint32_t*)(placement_address + 0xFD8);
     uint32_t do_page_fault1 = *ptr1;
     printf("PageFault: %x \n", do_page_fault1);
@@ -76,7 +76,6 @@ void kmain(unsigned int ebx, uint32_t initial_stack){
     uint32_t d = kmalloc(12);
     printf(", d: %x \n", d); 
 
-    breakpoint();
 
     initialize_tasking();
     printf("about to fork \n");
@@ -84,8 +83,8 @@ void kmain(unsigned int ebx, uint32_t initial_stack){
     int ret = fork();
     printf("fork() returned %x, ",ret);
     printf("and getpid() returned %x \n", getpid());
-    printf("sweeeggggggggggggg sweg \n");
-    printf("Welcome to Icarus \n");
+    //switch_task();
+    printf("Note: errors begin to occur when switch_task() is called. Debugging in process.\n");
 
     //now call start the program 
     printf("about to start program \n");

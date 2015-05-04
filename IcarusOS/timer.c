@@ -4,16 +4,16 @@
 #include "screen.h"
 #include "printf.h"
 #include "task.h"
+#include "util.h"
 
 
 uint32_t ticks = 0;
 
 void timer_callback(){
+    char timer[32];
+    sprintf(timer, "%d", ticks);
+    fb_clock_write(timer, strlen(timer));
     ticks++;
-    switch_task();
-    if(ticks % 50 == 0){
-        printf("%x", ticks);
-   }
 }
 
 void timer_init(uint32_t frequency){
@@ -30,5 +30,5 @@ void timer_init(uint32_t frequency){
     // Send the frequency divisor.
     outb(0x40, l);
     outb(0x40, h);
-    printf("timer initiated");
+    printf("timer initiated \n");
 }

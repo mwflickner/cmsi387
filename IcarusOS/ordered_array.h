@@ -15,12 +15,11 @@ typedef void* type_t;
   it should return zero.
 **/
 typedef int8_t (*lessthan_predicate_t)(type_t,type_t);
-typedef struct
-{
-   type_t *array;
-   uint32_t size;
-   uint32_t max_size;
-   lessthan_predicate_t less_than;
+typedef struct {
+    type_t *array;
+    uint32_t size;
+    uint32_t max_size;
+    lessthan_predicate_t less_than;
 } ordered_array_t;
 
 /**
